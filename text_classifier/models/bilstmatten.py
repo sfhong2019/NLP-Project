@@ -100,6 +100,7 @@ class BiLstmAttenModel(BaseModel):
         self.alpha = tf.nn.softmax(restoreM)
 
         # 利用求得的alpha的值对H进行加权求和，用矩阵运算直接操作
+        # (batch_size,hidden_size,time_step)   batch_size,time_step,1
         r = tf.matmul(tf.transpose(H, [0, 2, 1]), tf.reshape(self.alpha, [-1, self.config["sequence_length"], 1]))
 
         # 将三维压缩成二维sequeezeR=[batch_size, hidden_size]
